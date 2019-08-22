@@ -1,2 +1,2 @@
 # anisble
-ansible-playbook -k mysql.yaml
+ansible-playbook -k mysql.yml
