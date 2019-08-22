@@ -20,16 +20,13 @@
       password_match=`awk '/A temporary password is generated for/ {a=$0} END{ print a }' /var/log/mysqld.log | awk '{print $(NF)}'`
       echo $password_match
       mysql -uroot -p$password_match --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'Bahuguna@123456'; flush privileges; "
-      echo "[client]"
-      user=root
-      password=Password@12345 > /root/.my.cnf
-      notify: restart mysqld
+
 
   - meta: flush_handlers
   - debug:
       var: change_temp_pass
 
-  - name: restart mysql
-    service: name=mysql
+  - name: restart mysqld
+    service: name=mysqld
               enabled=yes
-              state=restarted   
+              state=restarted
